@@ -26,7 +26,7 @@ public:
 	static inline btVector3 ofxVec3ToBtVec3(ofxVec3f in) {
 		
 		btVector3 ret;
-		ret.setX(in.x);
+		ret.setX(in.x); 
 		ret.setY(in.y);
 		ret.setZ(in.z);
 		return ret;
