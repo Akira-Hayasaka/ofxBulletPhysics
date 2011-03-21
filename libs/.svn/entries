@@ -1,0 +1,31 @@
+10
+
+dir
+2
+http://ofxbullet.googlecode.com/svn/trunk/ofxBullet/libs
+http://ofxbullet.googlecode.com/svn
+
+
+
+2009-01-17T15:46:22.366814Z
+2
+jonas@halfdanj.dk
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2d2d4832-e4ad-11dd-9ba5-89a75009fd5d
+
+src
+dir
+
