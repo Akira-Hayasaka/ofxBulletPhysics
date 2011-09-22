@@ -9,7 +9,7 @@
 
 #include "ofxBullet.h"
 
-void ofxBullet::initPhysics(ofxVec3f gravity, bool _bEnableCollisionNotification) {
+void ofxBullet::initPhysics(ofVec3f gravity, bool _bEnableCollisionNotification) {
 	
 	bEnableCollisionNotification = _bEnableCollisionNotification;
 	
@@ -77,7 +77,7 @@ void ofxBullet::exitPhysics() {
 }
 
 
-void ofxBullet::enableRayCastingMouseInteraction(ofxCamera* _cam, ofxVec3f camPosOffset) {
+void ofxBullet::enableRayCastingMouseInteraction(ofCamera* _cam, ofVec3f camPosOffset) {
 	
 	cam = _cam;
 	cameraPosiotionOffset = camPosOffset;
@@ -87,7 +87,7 @@ void ofxBullet::enableRayCastingMouseInteraction(ofxCamera* _cam, ofxVec3f camPo
 	
 }
 
-void ofxBullet::enableRayCastingTouchInteraction(ofxCamera* _cam, ofxVec3f camPosOffset) {
+void ofxBullet::enableRayCastingTouchInteraction(ofCamera* _cam, ofVec3f camPosOffset) {
 	
 	cam = _cam;
 	cameraPosiotionOffset = camPosOffset;	
@@ -118,7 +118,7 @@ void ofxBullet::mousePressed(ofMouseEventArgs& event){
 		if (getWorld()) {
 			
 			btVector3 rayTo = getRayTo(x,y);
-			ofxVec3f campos = cam->getPosition();
+			ofVec3f campos = cam->getPosition();
 			btVector3 rayFrom = btVector3(campos.x, campos.y, campos.z);
 			
 			btCollisionWorld::ClosestRayResultCallback rayCallback(rayFrom,rayTo);
@@ -199,7 +199,7 @@ void ofxBullet::mouseDragged(ofMouseEventArgs& event){
 			btVector3 oldPivotInB = p2p->getPivotInB();
 			btVector3 newPivotB;
 			
-			ofxVec3f campos = cam->getPosition();
+			ofVec3f campos = cam->getPosition();
 			rayFrom = btVector3(campos.x, campos.y, campos.z);
 			btVector3 dir = newRayTo-rayFrom;
 			dir.normalize();
@@ -224,7 +224,7 @@ void ofxBullet::touchDown(ofTouchEventArgs& event){
 		if (getWorld()) {
 			
 			btVector3 rayTo = getRayTo(x,y);
-			ofxVec3f campos = cam->getPosition()+cameraPosiotionOffset;
+			ofVec3f campos = cam->getPosition()+cameraPosiotionOffset;
 			btVector3 rayFrom = btVector3(campos.x, campos.y, campos.z);
 			
 			btCollisionWorld::ClosestRayResultCallback rayCallback(rayFrom,rayTo);
@@ -306,7 +306,7 @@ void ofxBullet::touchMoved(ofTouchEventArgs& event){
 			btVector3 oldPivotInB = p2p->getPivotInB();
 			btVector3 newPivotB;
 			
-			ofxVec3f campos = cam->getPosition()+cameraPosiotionOffset;
+			ofVec3f campos = cam->getPosition()+cameraPosiotionOffset;
 			rayFrom = btVector3(campos.x, campos.y, campos.z);
 			btVector3 dir = newRayTo-rayFrom;
 			dir.normalize();
@@ -322,8 +322,8 @@ void ofxBullet::touchMoved(ofTouchEventArgs& event){
 
 
 
-MyRigidBody* ofxBullet::createGround(ofxVec3f startTrans, ofxVec3f shape, int mass,
-									  ofxVec4f color,
+MyRigidBody* ofxBullet::createGround(ofVec3f startTrans, ofVec3f shape, int mass,
+									  ofVec4f color,
 									  int bodyType) {
 
 	btTransform startTransform;
@@ -342,8 +342,8 @@ MyRigidBody* ofxBullet::createGround(ofxVec3f startTrans, ofxVec3f shape, int ma
 
 }
 
-MyRigidBody* ofxBullet::createBackWall(ofxVec3f startTrans, ofxVec3f shape, int mass,
-										 ofxVec4f color,
+MyRigidBody* ofxBullet::createBackWall(ofVec3f startTrans, ofVec3f shape, int mass,
+										 ofVec4f color,
 										 int bodyType) {
 	
 	btTransform startTransform;
@@ -365,17 +365,17 @@ MyRigidBody* ofxBullet::createBackWall(ofxVec3f startTrans, ofxVec3f shape, int 
 	
 }
 
-vector<MyRigidBody*> ofxBullet::createBoundingBox(ofxVec3f centerPos, ofxVec3f dimention,
-												  ofxVec4f color, int mass, int bodyType) {
+vector<MyRigidBody*> ofxBullet::createBoundingBox(ofVec3f centerPos, ofVec3f dimention,
+												  ofVec4f color, int mass, int bodyType) {
 	
 	// gournd
 	btTransform groundTrans;
 	groundTrans.setIdentity();
-	ofxVec3f groundVec = ofxVec3f(centerPos.x, centerPos.y+dimention.y, centerPos.z);
+	ofVec3f groundVec = ofVec3f(centerPos.x, centerPos.y+dimention.y, centerPos.z);
 	btVector3 groundBVec = ofxBulletStaticUtil::ofxVec3ToBtVec3(groundVec);
 	groundTrans.setOrigin(groundBVec);
 	MyRigidBody* ground = new MyRigidBody(bodyType);
-	ofxVec3f groundShape = ofxVec3f(1500,0,1600);
+	ofVec3f groundShape = ofVec3f(1500,0,1600);
 	btVector3 groundBShape = ofxBulletStaticUtil::ofxVec3ToBtVec3(groundShape);
 	ground->createBoxShape(groundTrans, groundBShape, mass, color);
 	m_dynamicsWorld->addRigidBody(ground->getRigidBody());	
@@ -394,8 +394,8 @@ vector<MyRigidBody*> ofxBullet::createBoundingBox(ofxVec3f centerPos, ofxVec3f d
 	return boudingBox;
 }
 
-MyRigidBody* ofxBullet::createStaticPlane(ofxVec3f startTrans, ofxVec3f shape, int mass,
-									 ofxVec4f color,
+MyRigidBody* ofxBullet::createStaticPlane(ofVec3f startTrans, ofVec3f shape, int mass,
+									 ofVec4f color,
 									 int bodyType) {
 	
 	btTransform startTransform;
@@ -413,9 +413,9 @@ MyRigidBody* ofxBullet::createStaticPlane(ofxVec3f startTrans, ofxVec3f shape, i
 	
 }
 
-MyRigidBody* ofxBullet::createBox(ofxVec3f startTrans, ofxVec3f boxShape, int mass,
-								  ofxVec4f color,
-								  int bodyType, ofxVec3f rot) {
+MyRigidBody* ofxBullet::createBox(ofVec3f startTrans, ofVec3f boxShape, int mass,
+								  ofVec4f color,
+								  int bodyType, ofVec3f rot) {
 
 	btTransform startTransform;
 	startTransform.setIdentity();
@@ -435,8 +435,8 @@ MyRigidBody* ofxBullet::createBox(ofxVec3f startTrans, ofxVec3f boxShape, int ma
 	
 }
 
-MyRigidBody* ofxBullet::createSphere(ofxVec3f startTrans, int radius, int mass,
-									  ofxVec4f color, 
+MyRigidBody* ofxBullet::createSphere(ofVec3f startTrans, int radius, int mass,
+									  ofVec4f color, 
 									  int bodyType) {
 	
 	btTransform startTransform;
@@ -455,8 +455,8 @@ MyRigidBody* ofxBullet::createSphere(ofxVec3f startTrans, int radius, int mass,
 	return mrb;
 }
 
-MyRigidBody* ofxBullet::createCapsule(ofxVec3f startTrans, int radius, int height, int mass,
-									  ofxVec4f color, 
+MyRigidBody* ofxBullet::createCapsule(ofVec3f startTrans, int radius, int height, int mass,
+									  ofVec4f color, 
 									  int bodyType) {
 	
 	btTransform startTransform;
@@ -481,11 +481,11 @@ RagDoll* ofxBullet::createRagdoll(const btVector3& startOffset, int scale) {
 	
 }
 
-MySoftBody* ofxBullet::createRope(ofxVec3f from, ofxVec3f len,
+MySoftBody* ofxBullet::createRope(ofVec3f from, ofVec3f len,
 								  int res, int fixed,
 								  int mass, 
-								  ofxVec4f color,
-								  ofxVec3f gravity,
+								  ofVec4f color,
+								  ofVec3f gravity,
 								  MyRigidBody* ancchorTgt) {
 	
 //	MySoftBody* msb = new MySoftBody(m_broadphase, m_dispatcher,
@@ -507,7 +507,7 @@ MySoftBody* ofxBullet::createRope(ofxVec3f from, ofxVec3f len,
 	
 }
 
-MySoftBody* ofxBullet::createEllipsoid(ofxVec3f gravity, ofxVec3f center, ofxVec3f radius, int res) {
+MySoftBody* ofxBullet::createEllipsoid(ofVec3f gravity, ofVec3f center, ofVec3f radius, int res) {
 	
 	MySoftBody* msb = new MySoftBody(m_broadphase, m_dispatcher, btVector3(gravity.x,gravity.y,gravity.z));
 	msb->createEllipsoidShape(btVector3(center.x, center.y, center.z),
@@ -520,7 +520,7 @@ MySoftBody* ofxBullet::createEllipsoid(ofxVec3f gravity, ofxVec3f center, ofxVec
 	
 }
 
-MySoftBody* ofxBullet::createSoftConvexHull(ofxVec3f gravity, const btVector3* vertices, int nVerts) {
+MySoftBody* ofxBullet::createSoftConvexHull(ofVec3f gravity, const btVector3* vertices, int nVerts) {
 	
 	MySoftBody* msb = new MySoftBody(m_broadphase, m_dispatcher, btVector3(gravity.x,gravity.y,gravity.z));
 	
@@ -532,7 +532,7 @@ MySoftBody* ofxBullet::createSoftConvexHull(ofxVec3f gravity, const btVector3* v
 	return msb;
 }
 
-MySoftBody* ofxBullet::createSoftTriMesh(ofxVec3f gravity, const btScalar* vertices, const int* triangles, int ntriangles) {
+MySoftBody* ofxBullet::createSoftTriMesh(ofVec3f gravity, const btScalar* vertices, const int* triangles, int ntriangles) {
 	
 	MySoftBody* msb = new MySoftBody(m_broadphase, m_dispatcher, btVector3(gravity.x,gravity.y,gravity.z));
 	
@@ -544,7 +544,7 @@ MySoftBody* ofxBullet::createSoftTriMesh(ofxVec3f gravity, const btScalar* verti
 	return msb;
 }
 
-MySoftBody* ofxBullet::createCloth(ofxVec3f gravity, ofxVec3f clothShape[4], int resolution, int fix) {
+MySoftBody* ofxBullet::createCloth(ofVec3f gravity, ofVec3f clothShape[4], int resolution, int fix) {
 	
 	MySoftBody* msb = new MySoftBody(m_broadphase, m_dispatcher, btVector3(gravity.x,gravity.y,gravity.z));
 	msb->createClothShape(clothShape, resolution, fix);
@@ -620,74 +620,74 @@ void ofxBullet::render() {
 
 btVector3 ofxBullet::getRayTo(int x, int y) {
 	
-	// why upside-down??
-	//y = ofMap(y, 0, ofGetHeight(), ofGetHeight(), 0);
-	
-	// oF adjustment
-	float adjustx = fabs(ofGetWidth()/2-x);
-	float adjusty = fabs(ofGetHeight()/2-y);
-	adjustx = ofMap(adjustx, 0, ofGetWidth()/2, 0, ofGetWidth()/5);
-	adjusty = ofMap(adjusty, 0, ofGetHeight()/2, 0, ofGetHeight()/5);
-	if (x > ofGetWidth()/2) adjustx = -adjustx;
-	if (y > ofGetHeight()/2) adjusty = -adjusty;
-	x += adjustx; y+= adjusty;
-	
-	float top = 1.f;
-	float bottom = -1.f;
-	float nearPlane = 1.f;
-	float tanFov = (top-bottom)*0.5f / nearPlane;
-	float fov = 2.0 * atanf (tanFov);
-	
-	ofxVec3f campos = cam->getPosition()+cameraPosiotionOffset;
-	btVector3 rayFrom = btVector3(campos.x, campos.y, campos.z);
-	ofxVec3f dir = cam->getDir();
-	btVector3 rayForward = btVector3(dir.x, dir.y, dir.z);
-	rayForward.normalize();
-	float farPlane = 10000.f;
-	rayForward *= farPlane;
-	
-	btVector3 rightOffset;
-	ofxVec3f camup = cam->getUp();
-	btVector3 vertical = btVector3(camup.x, camup.y, camup.z);
-	
-	btVector3 hor;
-	hor = rayForward.cross(vertical);
-	hor.normalize();
-	vertical = hor.cross(rayForward);
-	vertical.normalize();
-	vertical = -vertical;
-	
-	float tanfov = tanf(0.5f*fov);
-	
-	hor *= 2.f * farPlane * tanfov;
-	vertical *= 2.f * farPlane * tanfov;
-	
-	btScalar aspect;
-	
-	if (ofGetWidth() > ofGetHeight()) {
-		aspect = ofGetWidth() / (btScalar)ofGetHeight();
-		hor*=aspect;
-	} else 	{
-		aspect = ofGetHeight() / (btScalar)ofGetWidth();
-		vertical*=aspect;
-	}
-	
-	
-	btVector3 rayToCenter = rayFrom + rayForward;
-	btVector3 dHor = hor * 1.f/float(ofGetWidth());
-	btVector3 dVert = vertical * 1.f/float(ofGetHeight());
-	
-	
-	btVector3 rayTo = rayToCenter - 0.5f * hor + 0.5f * vertical;
-	rayTo += x * dHor;
-	rayTo -= y * dVert;
-	return rayTo;
+//	// why upside-down??
+//	//y = ofMap(y, 0, ofGetHeight(), ofGetHeight(), 0);
+//	
+//	// oF adjustment
+//	float adjustx = fabs(ofGetWidth()/2-x);
+//	float adjusty = fabs(ofGetHeight()/2-y);
+//	adjustx = ofMap(adjustx, 0, ofGetWidth()/2, 0, ofGetWidth()/5);
+//	adjusty = ofMap(adjusty, 0, ofGetHeight()/2, 0, ofGetHeight()/5);
+//	if (x > ofGetWidth()/2) adjustx = -adjustx;
+//	if (y > ofGetHeight()/2) adjusty = -adjusty;
+//	x += adjustx; y+= adjusty;
+//	
+//	float top = 1.f;
+//	float bottom = -1.f;
+//	float nearPlane = 1.f;
+//	float tanFov = (top-bottom)*0.5f / nearPlane;
+//	float fov = 2.0 * atanf (tanFov);
+//	
+//	ofVec3f campos = cam->getPosition()+cameraPosiotionOffset;
+//	btVector3 rayFrom = btVector3(campos.x, campos.y, campos.z);
+//	ofVec3f dir = cam->getDir();
+//	btVector3 rayForward = btVector3(dir.x, dir.y, dir.z);
+//	rayForward.normalize();
+//	float farPlane = 10000.f;
+//	rayForward *= farPlane;
+//	
+//	btVector3 rightOffset;
+//	ofVec3f camup = cam->getUp();
+//	btVector3 vertical = btVector3(camup.x, camup.y, camup.z);
+//	
+//	btVector3 hor;
+//	hor = rayForward.cross(vertical);
+//	hor.normalize();
+//	vertical = hor.cross(rayForward);
+//	vertical.normalize();
+//	vertical = -vertical;
+//	
+//	float tanfov = tanf(0.5f*fov);
+//	
+//	hor *= 2.f * farPlane * tanfov;
+//	vertical *= 2.f * farPlane * tanfov;
+//	
+//	btScalar aspect;
+//	
+//	if (ofGetWidth() > ofGetHeight()) {
+//		aspect = ofGetWidth() / (btScalar)ofGetHeight();
+//		hor*=aspect;
+//	} else 	{
+//		aspect = ofGetHeight() / (btScalar)ofGetWidth();
+//		vertical*=aspect;
+//	}
+//	
+//	
+//	btVector3 rayToCenter = rayFrom + rayForward;
+//	btVector3 dHor = hor * 1.f/float(ofGetWidth());
+//	btVector3 dVert = vertical * 1.f/float(ofGetHeight());
+//	
+//	
+//	btVector3 rayTo = rayToCenter - 0.5f * hor + 0.5f * vertical;
+//	rayTo += x * dHor;
+//	rayTo -= y * dVert;
+//	return rayTo;
 }
 
-vector<ofxVec3f> ofxBullet::getCollisionPointsA() {
+vector<ofVec3f> ofxBullet::getCollisionPointsA() {
 	return contactsA;
 }
 
-vector<ofxVec3f> ofxBullet::getCollisionPointsB() {
+vector<ofVec3f> ofxBullet::getCollisionPointsB() {
 	return contactsB;
 }

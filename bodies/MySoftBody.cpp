@@ -76,7 +76,7 @@ btSoftBodyWorldInfo MySoftBody::getSoftWI() {
 void MySoftBody::createRopeShape(btVector3 from, btVector3 len,
 							int res, int fixed,
 							int mass,
-							ofxVec4f color) {
+							ofVec4f color) {
 	
 	bodyColor = color;
 	
@@ -240,7 +240,7 @@ void MySoftBody::createTriMeshShape(const btScalar* vertices, const int* triangl
 	
 }
 
-void MySoftBody::createClothShape(ofxVec3f clothShape[4], 
+void MySoftBody::createClothShape(ofVec3f clothShape[4], 
 								  int resolution, int fix) {
 	
 	/*
@@ -285,14 +285,14 @@ void MySoftBody::render() {
 	glColor4f(0.0, 0.0, 0.0, 1.0);
 	
 	for(int i = 0; i < nodes.size() ; i++) {
-		ofxPoint(nodes[i].m_x.getX(), nodes[i].m_x.getY(), nodes[i].m_x.getZ());
+		ofCircle(nodes[i].m_x.getX(), nodes[i].m_x.getY(), nodes[i].m_x.getZ(), 3);
 	}
 	
 	ofSetColor(0, 0, 255);
 	for(int i = 0; i < links.size(); i++) {
 		btSoftBody::Node* node_0 = links[i].m_n[0];
 		btSoftBody::Node* node_1 = links[i].m_n[1];
-		ofxLine(node_0->m_x.getX(), node_0->m_x.getY(), node_0->m_x.getZ(), 
+		ofLine(node_0->m_x.getX(), node_0->m_x.getY(), node_0->m_x.getZ(), 
 				node_1->m_x.getX(), node_1->m_x.getY(), node_1->m_x.getZ());
 	}		
 	
@@ -302,7 +302,7 @@ void MySoftBody::render() {
 		btSoftBody::Node* node_0 = faces[i].m_n[0];
 		btSoftBody::Node* node_1 = faces[i].m_n[1];
 		btSoftBody::Node* node_2 = faces[i].m_n[2];
-		ofxTriangleShape(node_0->m_x.getX(), node_0->m_x.getY(), node_0->m_x.getZ(),
+		ofTriangle(node_0->m_x.getX(), node_0->m_x.getY(), node_0->m_x.getZ(),
 						 node_1->m_x.getX(), node_1->m_x.getY(), node_1->m_x.getZ(),
 						 node_2->m_x.getX(), node_2->m_x.getY(), node_2->m_x.getZ());	
 		
@@ -310,7 +310,7 @@ void MySoftBody::render() {
 	
 }
 
-ofxVec3f MySoftBody::getBodyCentroid() {
+ofVec3f MySoftBody::getBodyCentroid() {
 
 	btSoftBody::tNodeArray& nodes(psb->m_nodes);
 
@@ -322,17 +322,17 @@ ofxVec3f MySoftBody::getBodyCentroid() {
 		y += nodes[i].m_x.getY();		
 		z += nodes[i].m_x.getZ();
 	}
-	return ofxVec3f(x/nodes.size(), y/nodes.size(), z/nodes.size());
+	return ofVec3f(x/nodes.size(), y/nodes.size(), z/nodes.size());
 }
 
-vector<ofxVec3f> MySoftBody::getAllFacesAsVerts() {
+vector<ofVec3f> MySoftBody::getAllFacesAsVerts() {
 	
-	vector<ofxVec3f> rtn;
+	vector<ofVec3f> rtn;
 	btSoftBody::tFaceArray& faces(psb->m_faces);
 	for (int i = 0; i < faces.size(); i++) {
-		ofxVec3f a = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[i].m_n[0]->m_x);
-		ofxVec3f b = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[i].m_n[1]->m_x);
-		ofxVec3f c = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[i].m_n[2]->m_x);
+		ofVec3f a = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[i].m_n[0]->m_x);
+		ofVec3f b = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[i].m_n[1]->m_x);
+		ofVec3f c = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[i].m_n[2]->m_x);
 		rtn.push_back(a);
 		rtn.push_back(b);
 		rtn.push_back(c);
@@ -341,13 +341,13 @@ vector<ofxVec3f> MySoftBody::getAllFacesAsVerts() {
 	
 }
 
-vector<ofxVec3f> MySoftBody::getFaceAsVerts(int faceIdx) {
+vector<ofVec3f> MySoftBody::getFaceAsVerts(int faceIdx) {
 	
-	vector<ofxVec3f> rtn;
+	vector<ofVec3f> rtn;
 	btSoftBody::tFaceArray& faces(psb->m_faces);
-	ofxVec3f a = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[faceIdx].m_n[0]->m_x);
-	ofxVec3f b = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[faceIdx].m_n[1]->m_x);
-	ofxVec3f c = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[faceIdx].m_n[2]->m_x);
+	ofVec3f a = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[faceIdx].m_n[0]->m_x);
+	ofVec3f b = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[faceIdx].m_n[1]->m_x);
+	ofVec3f c = ofxBulletStaticUtil::btVec3ToOfxVec3(faces[faceIdx].m_n[2]->m_x);
 	rtn.push_back(a);
 	rtn.push_back(b);
 	rtn.push_back(c);
@@ -355,24 +355,24 @@ vector<ofxVec3f> MySoftBody::getFaceAsVerts(int faceIdx) {
 	
 }
 
-ofxVec3f MySoftBody::getFaceNormal(int faceIdx) {
+ofVec3f MySoftBody::getFaceNormal(int faceIdx) {
 	
 	btSoftBody::tFaceArray& faces(psb->m_faces);
 	btVector3 btNormal = faces[faceIdx].m_normal;
-	return ofxVec3f(btNormal.getX(), btNormal.getY(), btNormal.getZ());
+	return ofVec3f(btNormal.getX(), btNormal.getY(), btNormal.getZ());
 	
 }
 
 float MySoftBody::getFaceDistanceBetween(int face1Idx, int face2Idx) {
 	
 	btSoftBody::tFaceArray& faces(psb->m_faces);
-	ofxVec3f face1Centroid = getFaceCentroid(face1Idx);
-	ofxVec3f face2Centroid = getFaceCentroid(face2Idx);
+	ofVec3f face1Centroid = getFaceCentroid(face1Idx);
+	ofVec3f face2Centroid = getFaceCentroid(face2Idx);
 	return face1Centroid.distance(face2Centroid);
 	
 }
 
-ofxVec3f MySoftBody::getFaceCentroid(int faceIdx) {
+ofVec3f MySoftBody::getFaceCentroid(int faceIdx) {
 	
 	btSoftBody::tFaceArray& faces(psb->m_faces);
 	
@@ -380,7 +380,7 @@ ofxVec3f MySoftBody::getFaceCentroid(int faceIdx) {
 	btSoftBody::Node* node_1 = faces[faceIdx].m_n[1];
 	btSoftBody::Node* node_2 = faces[faceIdx].m_n[2];		
 	
-	return ofxVec3f((node_0->m_x.getX()+node_1->m_x.getX()+node_2->m_x.getX())/3,
+	return ofVec3f((node_0->m_x.getX()+node_1->m_x.getX()+node_2->m_x.getX())/3,
 					(node_0->m_x.getY()+node_1->m_x.getY()+node_2->m_x.getY())/3,
 					(node_0->m_x.getZ()+node_1->m_x.getZ()+node_2->m_x.getZ())/3);
 	
@@ -391,9 +391,9 @@ vector<int> MySoftBody::sortFaceByDistance(int faceIdx) {
 	btSoftBody::tFaceArray& faces(psb->m_faces);	
 	
 	map<float, int, greater<float> > faceSize;
-	ofxVec3f tgtCentroid = getFaceCentroid(faceIdx);
+	ofVec3f tgtCentroid = getFaceCentroid(faceIdx);
 	for (int i = 0; i < faces.size(); i++) {
-		ofxVec3f compCentroid1 = getFaceCentroid(i);
+		ofVec3f compCentroid1 = getFaceCentroid(i);
 		float d1 = tgtCentroid.distance(compCentroid1);
 		faceSize.insert(map<float, int, greater<float> >::value_type(d1, i));
 	}
@@ -408,14 +408,14 @@ vector<int> MySoftBody::sortFaceByDistance(int faceIdx) {
 	return faceIDVec;
 }
 
-vector<int> MySoftBody::sortFaceByPosition(ofxVec3f pos) {
+vector<int> MySoftBody::sortFaceByPosition(ofVec3f pos) {
 	
 	btSoftBody::tFaceArray& faces(psb->m_faces);
 	
 	// get the face distances from pos
 	map<float, int, greater<float> > distSort;
 	for (int i = 0; i < faces.size(); i++) {
-		ofxVec3f cen = getFaceCentroid(i);
+		ofVec3f cen = getFaceCentroid(i);
 		float dist = cen.distance(pos);
 		distSort.insert(map<float, int, greater<float> >::value_type(dist, i));
 	}

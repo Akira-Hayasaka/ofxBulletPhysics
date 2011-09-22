@@ -2,7 +2,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofx3DUtils.h"
 #include "ofxBulletStaticUtil.h"
 #include "btBulletDynamicsCommon.h"
 #include "MyKinematicMotionState.h"
@@ -12,7 +11,7 @@ class MyRigidBody {
 	
 public:
 	
-	MyRigidBody(int bt){ bodyType = bt; bodyColor = ofxVec4f(0.1, 0.1, 0, 1); };
+	MyRigidBody(int bt){ bodyType = bt; bodyColor = ofVec4f(0.1, 0.1, 0, 1); };
 	~MyRigidBody(){};
 	
 	void						remove(btDynamicsWorld* m_dynamicsWorld);
@@ -20,21 +19,21 @@ public:
 	void						render(btDynamicsWorld* m_dynamicsWorld);
 	
 	void						createBoxShape(btTransform startTrans, btVector3 shape, int mass, 
-											   ofxVec4f color = ofxVec4f(0.1, 0, 0.1, 0.5));	
+											   ofVec4f color = ofVec4f(0.1, 0, 0.1, 0.5));	
 	void						createSphereShape(btTransform startTrans, int _radius, int mass, 
-												   ofxVec4f color = ofxVec4f(0, 0.1, 0.1, 0.5));	
+												   ofVec4f color = ofVec4f(0, 0.1, 0.1, 0.5));	
 	void						createCapsuleShape(btTransform startTrans, int radius, int height, int mass, 
-												   ofxVec4f color = ofxVec4f(0, 0.1, 0.1, 0.5));
+												   ofVec4f color = ofVec4f(0, 0.1, 0.1, 0.5));
 	
-	void						translateBody(ofxVec3f pos, ofxVec3f rotDir, float degree);
+	void						translateBody(ofVec3f pos, ofVec3f rotDir, float degree);
 	ofPoint						getBodyPos();
-	ofxVec3f					getBodyRotDegree();
-	ofxQuaternion				getBodyRotQuat();
-	ofxVec4f					getBodyColor();
+	ofVec3f					getBodyRotDegree();
+	ofQuaternion				getBodyRotQuat();
+	ofVec4f					getBodyColor();
 	int							getSphereRadius(); // sphere only
-	ofxVec3f					getBoxSize(); // box only
+	ofVec3f					getBoxSize(); // box only
 	int							getBodyMass() { return bodyMass; };	
-	vector<ofxVec3f>			getVertsPos();
+	vector<ofVec3f>			getVertsPos();
 	
 	btRigidBody*				getRigidBody(){ return psb; };	
 	btConvexInternalShape*		getRigidShape() { return shape; };
@@ -43,10 +42,10 @@ public:
 	
 		int							ID;
 		float						deceleration;
-		ofxVec3f					destination;
+		ofVec3f					destination;
 		float						distance;
 		float						currentRadius;
-		ofxVec3f					rotDir;
+		ofVec3f					rotDir;
 		int						age;
 		bool						delAnimFlag;
 		bool						delFlag;
@@ -66,7 +65,7 @@ private:
 	int							bodyType;
 	int							sphereRadius; // sphere only
 	btVector3					boxSize; // box only
-	ofxVec4f					bodyColor;
+	ofVec4f					bodyColor;
 
 	
 };

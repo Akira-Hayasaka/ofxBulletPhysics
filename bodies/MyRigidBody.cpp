@@ -9,14 +9,14 @@
 //			
 //			//sms->getRigidBody()->setActivationState(DISABLE_SIMULATION);
 //			
-//			ofxVec3f smspos = sms->getBodyPos();
+//			ofVec3f smspos = sms->getBodyPos();
 //			//int radius = sms->getSphereRadius();
-//			ofxVec3f size = sms->getBoxSize();
-//			ofxVec3f deg = sms->getBodyRotDegree();
+//			ofVec3f size = sms->getBoxSize();
+//			ofVec3f deg = sms->getBodyRotDegree();
 //			int mass = sms->getBodyMass();
 //			
-////			MyRigidBody* obj = bullet->createSphere(smspos, radius, mass, ofxVec4f(0,0,0,0), KINEMATIC_BODY);
-//			MyRigidBody* obj = bullet->createBox(smspos, size, mass, ofxVec4f(0,0.3,0,1), KINEMATIC_BODY, deg);			
+////			MyRigidBody* obj = bullet->createSphere(smspos, radius, mass, ofVec4f(0,0,0,0), KINEMATIC_BODY);
+//			MyRigidBody* obj = bullet->createBox(smspos, size, mass, ofVec4f(0,0.3,0,1), KINEMATIC_BODY, deg);			
 //			obj->getRigidBody()->setInterpolationWorldTransform(obj->getRigidBody()->getWorldTransform());
 //			obj->getRigidBody()->setInterpolationLinearVelocity(btVector3(0,0,0));
 //			obj->getRigidBody()->setInterpolationAngularVelocity(btVector3(0,0,0));
@@ -55,21 +55,21 @@ void MyRigidBody::remove(btDynamicsWorld* m_dynamicsWorld) {
 	delete shape;	
 }
 
-void MyRigidBody::createBoxShape(btTransform startTrans, btVector3 boxShape, int mass, ofxVec4f color) {
+void MyRigidBody::createBoxShape(btTransform startTrans, btVector3 boxShape, int mass, ofVec4f color) {
 	boxSize = boxShape;
 	bodyColor = color;
 	shape = new btBoxShape(boxShape);
 	createRigidBody(mass, startTrans);
 }
 
-void MyRigidBody::createSphereShape(btTransform startTrans, int _radius, int mass, ofxVec4f color) {
+void MyRigidBody::createSphereShape(btTransform startTrans, int _radius, int mass, ofVec4f color) {
 	sphereRadius = _radius;
 	bodyColor = color;
 	shape = new btSphereShape(sphereRadius);
 	createRigidBody(mass, startTrans);	
 }
 
-void MyRigidBody::createCapsuleShape(btTransform startTrans, int radius, int height, int mass, ofxVec4f color) {
+void MyRigidBody::createCapsuleShape(btTransform startTrans, int radius, int height, int mass, ofVec4f color) {
 	bodyColor = color;
 	shape = new btCapsuleShape(radius, height);
 	createRigidBody(mass, startTrans);	
@@ -115,7 +115,7 @@ void MyRigidBody::createRigidBody(int mass, const btTransform startTrans) {
 }
 
 
-void MyRigidBody::translateBody(ofxVec3f pos, ofxVec3f rotDir, float degree) {
+void MyRigidBody::translateBody(ofVec3f pos, ofVec3f rotDir, float degree) {
 	
 //	cout << "only for kinematic body...?" << endl;
 //	assert(bodyType == KINEMATIC_BODY);
@@ -151,9 +151,9 @@ void MyRigidBody::render(btDynamicsWorld* m_dynamicsWorld) {
 	//ofSetColor(255, 255, 255);
 }
 
-vector<ofxVec3f> MyRigidBody::getVertsPos() {
+vector<ofVec3f> MyRigidBody::getVertsPos() {
 	
-	vector<ofxVec3f> ret;
+	vector<ofVec3f> ret;
 	
 	GL_ShapeDrawer::ShapeCache *sc = drawer.cache((btConvexShape*)shape);
 	btShapeHull* hull = &sc->m_shapehull;
@@ -212,7 +212,7 @@ ofPoint MyRigidBody::getBodyPos() {
 //	return ofPoint(btPos.x(), btPos.y(), btPos.z());	
 }
 
-ofxVec3f MyRigidBody::getBodyRotDegree() {
+ofVec3f MyRigidBody::getBodyRotDegree() {
 	
 	btScalar m[16];
 	btDefaultMotionState* myMotionState = (btDefaultMotionState*)psb->getMotionState();
@@ -225,17 +225,17 @@ ofxVec3f MyRigidBody::getBodyRotDegree() {
 				   ofxBulletStaticUtil::radToDeg(fAngZ));
 }
 
-ofxQuaternion MyRigidBody::getBodyRotQuat() {
+ofQuaternion MyRigidBody::getBodyRotQuat() {
 	
 	btDefaultMotionState* myMotionState = (btDefaultMotionState*)psb->getMotionState();
 	btTransform worldTrans;
 	myMotionState->getWorldTransform(worldTrans);
 	btQuaternion bq = worldTrans.getRotation();
-	return ofxQuaternion(bq.x(), bq.y(), bq.z(), bq.w());
+	return ofQuaternion(bq.x(), bq.y(), bq.z(), bq.w());
 	
 }
 
-ofxVec4f MyRigidBody::getBodyColor() {
+ofVec4f MyRigidBody::getBodyColor() {
 	return bodyColor;
 }
 
@@ -243,6 +243,6 @@ int MyRigidBody::getSphereRadius() {
 	return sphereRadius;
 }
 
-ofxVec3f MyRigidBody::getBoxSize() {
+ofVec3f MyRigidBody::getBoxSize() {
 	return ofxBulletStaticUtil::btVec3ToOfxVec3(boxSize);
 }

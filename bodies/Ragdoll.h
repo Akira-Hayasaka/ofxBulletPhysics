@@ -58,7 +58,7 @@ class RagDoll
 
 	btRigidBody* localCreateRigidBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape);
 
-	vector<ofxVec4f> colors;
+	vector<ofVec4f> colors;
 	
 	GL_ShapeDrawer drawer;
 	
@@ -73,7 +73,7 @@ public:
 	
 	ofPoint getBodyPos();
 	vector<ofPoint> getPartsPos();
-	vector<ofxVec3f> getPartsShapeDimention();
+	vector<ofVec3f> getPartsShapeDimention();
 	vector<ofPoint> getPartsRotDegree();
 	
 	

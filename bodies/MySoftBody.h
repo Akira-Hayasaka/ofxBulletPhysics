@@ -14,8 +14,6 @@
 #include "BulletSoftBody/btSoftBody.h"
 #include "BulletSoftBody/btSoftBodyHelpers.h"
 #include "BulletCollision/CollisionShapes/btShapeHull.h"
-#include "ofxVectorMath.h"
-#include "ofx3DUtils.h"
 #include "ofxBulletStaticUtil.h"
 
 class MySoftBody {
@@ -31,9 +29,9 @@ public:
 	void createRopeShape(btVector3 from, btVector3 len,
 					int res, int fixed,
 					int mass,
-					ofxVec4f color = ofxVec4f(0.6, 0.6, 0.1, 0.5));
+					ofVec4f color = ofVec4f(0.6, 0.6, 0.1, 0.5));
 	void createEllipsoidShape(btVector3 center, btVector3 radius, int res);
-	void createClothShape(ofxVec3f clothShape[4],
+	void createClothShape(ofVec3f clothShape[4],
 						  int resolution, int fix);
 	void createConvexHullShape(const btVector3* vertices, int nVerts);
 	void createTriMeshShape(const btScalar* vertices, const int* triangles, int ntriangles)	;
@@ -43,14 +41,14 @@ public:
 	
 	btSoftBody* getSoftBody();
 	void setSoftBody(btSoftBody* _psb);
-	ofxVec3f getBodyCentroid();	
-	vector<ofxVec3f> getAllFacesAsVerts();
-	vector<ofxVec3f> getFaceAsVerts(int faceIdx);
-	ofxVec3f getFaceNormal(int faceIdx);
+	ofVec3f getBodyCentroid();	
+	vector<ofVec3f> getAllFacesAsVerts();
+	vector<ofVec3f> getFaceAsVerts(int faceIdx);
+	ofVec3f getFaceNormal(int faceIdx);
 	float getFaceDistanceBetween(int face1Idx, int face2Idx);
-	ofxVec3f getFaceCentroid(int faceIdx);
+	ofVec3f getFaceCentroid(int faceIdx);
 	vector<int> sortFaceByDistance(int faceIdx);
-	vector<int> sortFaceByPosition(ofxVec3f pos);
+	vector<int> sortFaceByPosition(ofVec3f pos);
 	btSoftBodyWorldInfo getSoftWI();
 	
 	void pinchFace(int faceIdx, float force);
@@ -59,9 +57,9 @@ public:
 	
 	int ballSize;	
 	// edge ball position
-	ofxVec3f ballPos;
+	ofVec3f ballPos;
 	
-	ofxVec4f bodyColor;	
+	ofVec4f bodyColor;	
 	
 
 	btSoftBody* psb;

@@ -7,11 +7,11 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 
 	// setup colors
 	for (int i = 0; i < BODYPART_COUNT; i++) {
-//		ofxVec4f col = ofxVec4f(ofRandom(0.7, 1.0),
+//		ofVec4f col = ofVec4f(ofRandom(0.7, 1.0),
 //								ofRandom(0.5, 1.0),
 //								ofRandom(0.7, 1.0),
 //								1.0);
-		ofxVec4f col = ofxVec4f(0.7,
+		ofVec4f col = ofVec4f(0.7,
 								0.7,
 								0.7,
 								1.0);		
@@ -414,9 +414,9 @@ vector<ofPoint> RagDoll::getPartsPos() {
 	
 }
 
-vector<ofxVec3f> RagDoll::getPartsShapeDimention() {
+vector<ofVec3f> RagDoll::getPartsShapeDimention() {
 	
-	vector<ofxVec3f> ret;
+	vector<ofVec3f> ret;
 	for (int i = 0; i < BODYPART_COUNT; i++) {
 		//btConvexInternalShape* cs = m_shapes[i];
 		btVector3 dimention = m_shapes[i]->getImplicitShapeDimensions();

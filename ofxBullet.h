@@ -9,7 +9,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxVectorMath.h"
 #include <btBulletDynamicsCommon.h>
 #include "BulletSoftBody/btSoftBody.h"
 #include "BulletSoftBody/btSoftRigidDynamicsWorld.h"
@@ -31,8 +30,8 @@ public:
 	ofxBullet(){};
 	~ofxBullet() { exitPhysics(); };
 	
-	void					initPhysics(){ initPhysics(ofxVec3f(0,100,0), false); };
-	void					initPhysics(ofxVec3f gravity, bool _bEnableCollisionNotification = false);	
+	void					initPhysics(){ initPhysics(ofVec3f(0,100,0), false); };
+	void					initPhysics(ofVec3f gravity, bool _bEnableCollisionNotification = false);	
 	void					exitPhysics();
 	void					stepPhysicsSimulation(float framerate);	
 	void					render();	
@@ -40,17 +39,17 @@ public:
 	void					clientMoveAndDisplay(){};									
 	void					updateModifierKeys(){};
 	
-	void					enableRayCastingMouseInteraction(ofxCamera* _cam, ofxVec3f camPosOffset = ofxVec3f(0,0,0));
+	void					enableRayCastingMouseInteraction(ofCamera* _cam, ofVec3f camPosOffset = ofVec3f(0,0,0));
 	bool					bMousePressed;
 	void					mouseDragged(ofMouseEventArgs& event);
 	void					mousePressed(ofMouseEventArgs& event);
 	void					mouseReleased(ofMouseEventArgs& event);
-	void					enableRayCastingTouchInteraction(ofxCamera* _cam, ofxVec3f camPosOffset = ofxVec3f(0,0,0));
+	void					enableRayCastingTouchInteraction(ofCamera* _cam, ofVec3f camPosOffset = ofVec3f(0,0,0));
 	bool					bTouched;
 	void					touchDown(ofTouchEventArgs& touch);
 	void					touchUp(ofTouchEventArgs& touch);
 	void					touchMoved(ofTouchEventArgs& touch);
-	ofxVec3f				cameraPosiotionOffset;
+	ofVec3f				cameraPosiotionOffset;
 	
 	inline btDynamicsWorld* getWorld() { return m_dynamicsWorld; };
 
@@ -59,50 +58,50 @@ public:
 	virtual btSoftRigidDynamicsWorld* getSoftDynamicsWorld() { return (btSoftRigidDynamicsWorld*) m_dynamicsWorld; }	
 	
 	
-	MyRigidBody*			createGround(ofxVec3f startTrans, ofxVec3f shape, int mass = 0,
-										 ofxVec4f color = ofxVec4f(1.0, 1.0, 1.0, 0.5),
+	MyRigidBody*			createGround(ofVec3f startTrans, ofVec3f shape, int mass = 0,
+										 ofVec4f color = ofVec4f(1.0, 1.0, 1.0, 0.5),
 										 int bodyType = KINEMATIC_BODY);	
-	MyRigidBody*			createBackWall(ofxVec3f startTrans, ofxVec3f shape, int mass = 0,
-											ofxVec4f color = ofxVec4f(0.1, 0.1, 0, 0.5),
+	MyRigidBody*			createBackWall(ofVec3f startTrans, ofVec3f shape, int mass = 0,
+											ofVec4f color = ofVec4f(0.1, 0.1, 0, 0.5),
 											int bodyType = KINEMATIC_BODY);	
-	vector<MyRigidBody*>	createBoundingBox(ofxVec3f centerPos = ofxVec3f(ofGetWidth()/2, ofGetHeight()/2, 0),
-											  ofxVec3f dimention = ofxVec3f(ofGetWidth(), ofGetHeight(), ofGetWidth()),
-											  ofxVec4f color = ofxVec4f(0.3, 0.0, 3, 0.5), 
+	vector<MyRigidBody*>	createBoundingBox(ofVec3f centerPos = ofVec3f(ofGetWidth()/2, ofGetHeight()/2, 0),
+											  ofVec3f dimention = ofVec3f(ofGetWidth(), ofGetHeight(), ofGetWidth()),
+											  ofVec4f color = ofVec4f(0.3, 0.0, 3, 0.5), 
 											  int mass = 0, int bodyType = KINEMATIC_BODY);
-	MyRigidBody*			createStaticPlane(ofxVec3f startTrans, ofxVec3f shape, int mass = 0,
-										 ofxVec4f color = ofxVec4f(1.0, 1.0, 1.0, 0.5),
+	MyRigidBody*			createStaticPlane(ofVec3f startTrans, ofVec3f shape, int mass = 0,
+										 ofVec4f color = ofVec4f(1.0, 1.0, 1.0, 0.5),
 										 int bodyType = KINEMATIC_BODY);	
-	MyRigidBody*			createBox(ofxVec3f startTrans, ofxVec3f boxShape, int mass,
-									  ofxVec4f color = ofxVec4f(0.1, 0.1, 0, 0.5),
+	MyRigidBody*			createBox(ofVec3f startTrans, ofVec3f boxShape, int mass,
+									  ofVec4f color = ofVec4f(0.1, 0.1, 0, 0.5),
 									  int bodyType = DYNAMIC_BODY, 
-									  ofxVec3f rot = ofxVec3f(0, 0, 0));
-	MyRigidBody*			createSphere(ofxVec3f startTrans, int radius, int mass,
-										  ofxVec4f color = ofxVec4f(0, 0.1, 0.1, 0.5),
+									  ofVec3f rot = ofVec3f(0, 0, 0));
+	MyRigidBody*			createSphere(ofVec3f startTrans, int radius, int mass,
+										  ofVec4f color = ofVec4f(0, 0.1, 0.1, 0.5),
 										  int bodyType = DYNAMIC_BODY);	
-	MyRigidBody*			createCapsule(ofxVec3f startTrans, int radius, int height, int mass,
-										  ofxVec4f color = ofxVec4f(0, 0.1, 0.1, 0.5),
+	MyRigidBody*			createCapsule(ofVec3f startTrans, int radius, int height, int mass,
+										  ofVec4f color = ofVec4f(0, 0.1, 0.1, 0.5),
 										 int bodyType = DYNAMIC_BODY);
 	RagDoll*				createRagdoll(const btVector3& startOffset, int scale = 60);
-	MySoftBody*				createRope(ofxVec3f from, ofxVec3f len,
+	MySoftBody*				createRope(ofVec3f from, ofVec3f len,
 									   int res, int fixed,
 									   int mass,
-									   ofxVec4f color = ofxVec4f(0.6, 0.6, 0.1, 0.5),
-									   ofxVec3f gravity = ofxVec3f(0,10,0),
+									   ofVec4f color = ofVec4f(0.6, 0.6, 0.1, 0.5),
+									   ofVec3f gravity = ofVec3f(0,10,0),
 									   MyRigidBody* anchorTgt = NULL);
-	MySoftBody*				createEllipsoid(ofxVec3f gravity, ofxVec3f center, ofxVec3f radius, int res);
-	MySoftBody*				createCloth(ofxVec3f gravity, ofxVec3f clothShape[4], int resolution, int fix);	
-	MySoftBody*				createSoftConvexHull(ofxVec3f gravity, const btVector3* vertices, int nVerts);	
-	MySoftBody*				createSoftTriMesh(ofxVec3f gravity, const btScalar* vertices, const int* triangles, int ntriangles);
+	MySoftBody*				createEllipsoid(ofVec3f gravity, ofVec3f center, ofVec3f radius, int res);
+	MySoftBody*				createCloth(ofVec3f gravity, ofVec3f clothShape[4], int resolution, int fix);	
+	MySoftBody*				createSoftConvexHull(ofVec3f gravity, const btVector3* vertices, int nVerts);	
+	MySoftBody*				createSoftTriMesh(ofVec3f gravity, const btScalar* vertices, const int* triangles, int ntriangles);
 	
-	ofxVec3f				getSceneCenter();
-	void					setSceneCenter(ofxVec3f _center);	
+	ofVec3f				getSceneCenter();
+	void					setSceneCenter(ofVec3f _center);	
 	
 	inline void				enableCollisionNotifycation() { bEnableCollisionNotification = true; }
 	inline void				disableCollisionNotifycation() { bEnableCollisionNotification = false; }
-	vector<ofxVec3f>		getCollisionPointsA();
-	vector<ofxVec3f>		getCollisionPointsB(); // how different A and B??
+	vector<ofVec3f>		getCollisionPointsA();
+	vector<ofVec3f>		getCollisionPointsB(); // how different A and B??
 						
-	ofxCamera*				cam;
+	ofCamera*				cam;
 	MyRigidBody*			ground;
 	MyRigidBody*			backWall;
 	vector<MyRigidBody*>	boudingBox;
@@ -122,10 +121,10 @@ protected:
 	btCollisionDispatcher*					m_dispatcher;
 	btBroadphaseInterface*					m_broadphase;
 	
-	ofxVec3f								sceneCenter;
+	ofVec3f								sceneCenter;
 	
 	bool									bEnableCollisionNotification;
-	vector<ofxVec3f>						contactsA;
-	vector<ofxVec3f>						contactsB;
+	vector<ofVec3f>						contactsA;
+	vector<ofVec3f>						contactsB;
 	
 };

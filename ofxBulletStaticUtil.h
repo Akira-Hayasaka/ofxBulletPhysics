@@ -10,8 +10,6 @@
  */
 
 #include "ofMain.h"
-#include "ofxVec3f.h"
-#include "ofxVec4f.h"
 #include "btVector3.h"
 
 
@@ -23,7 +21,7 @@ class ofxBulletStaticUtil {
 	
 public:
 	
-	static inline btVector3 ofxVec3ToBtVec3(ofxVec3f in) {
+	static inline btVector3 ofxVec3ToBtVec3(ofVec3f in) {
 		
 		btVector3 ret;
 		ret.setX(in.x); 
@@ -33,9 +31,9 @@ public:
 		
 	}	
 	
-	static inline ofxVec3f btVec3ToOfxVec3(btVector3 in) {
+	static inline ofVec3f btVec3ToOfxVec3(btVector3 in) {
 		
-		ofxVec3f ret;
+		ofVec3f ret;
 		ret.x = in.getX();
 		ret.y = in.getY();
 		ret.z = in.getZ();
@@ -43,7 +41,7 @@ public:
 		
 	}
 	
-	static inline btVector4 ofxVec4ToBtVec4(ofxVec4f in) {
+	static inline btVector4 ofxVec4ToBtVec4(ofVec4f in) {
 	
 		btVector4 ret;
 		ret.setX(in.x);
